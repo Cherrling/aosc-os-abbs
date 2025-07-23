@@ -14,8 +14,6 @@ elif [[ "${__CROSS}" = "loongarch64" ]]; then
     GCC_LANGS="c,c++,fortran,lto,objc,obj-c++,m2,d"
 elif [[ "${__CROSS}" = "loongson3" ]]; then
     GCC_LANGS="c,c++,fortran,lto,objc,obj-c++,m2,d"
-elif [[ "${__CROSS}" = "mips64r6el" ]]; then
-    GCC_LANGS="c,c++,fortran,lto,objc,obj-c++,m2,d,ada"
 elif [[ "${__CROSS}" = "ppc64el" ]]; then
     GCC_LANGS="c,c++,fortran,lto,go,objc,obj-c++,m2,d,ada"
 elif [[ "${__CROSS}" = "riscv64" ]]; then
@@ -26,8 +24,6 @@ fi
 if ab_match_arch loongarch64 || \
    ab_match_arch loongson3; then
     GCC_LANGS="c,c++,fortran,lto,objc,obj-c++,m2,d"
-elif ab_match_arch mips64r6el; then
-    GCC_LANGS="c,c++,fortran,lto,objc,obj-c++,m2,d,ada"
 fi
 
 SHARED_OPTIONS="""
@@ -65,10 +61,10 @@ make DESTDIR=$PKGDIR install
 abinfo "Dropping texinfo dir index ..."
 rm -v "$PKGDIR"/opt/abcross/${__CROSS}/share/info/dir
 
-abinfo "Appending the cross binary path to PATH ..."
-mkdir -pv "$PKGDIR"/etc/{bashrc,profile}.d
-for i in bashrc profile; do
-    cat > "$PKGDIR"/etc/${i}.d/${PKGNAME}.sh << EOF
-export PATH="\${PATH}:/opt/abcross/${__CROSS}/bin"
-EOF
+abinfo "Creating symlinks to the cross binaries to /usr/bin ..."
+mkdir -pv "$PKGDIR"/usr/bin
+cd "$PKGDIR"/opt/abcross/${__CROSS}/bin
+for i in ${ARCH_TARGET[${__CROSS}]}-*; do
+    ln -sv ../../opt/abcross/${__CROSS}/bin/$i \
+        "$PKGDIR"/usr/bin/$i
 done

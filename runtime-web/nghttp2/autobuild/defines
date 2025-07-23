@@ -18,9 +18,6 @@ USECLANG__LOONGSON3=0
 # flags 'SmallDataLimit': IDs have conflicting values in
 # '../third-party/.libs/liburl-parser.a.llvm.184.url_parser.c' and 'ld-temp.o'
 USECLANG__RISCV64=0
-# FIXME: Disabling Clang on mips64r6el.
-# Clang segfaults during configure.
-USECLANG__MIPS64R6EL=0
 # FIXME: Disabling Clang on ppc64el.
 #
 # During configure...
@@ -64,7 +61,7 @@ AUTOTOOLS_AFTER=(
     '--with-libnghttp3=no'
     '--with-libbpf'
 )
-# FIXME: Clang build fails on loongson3, mips64r6el, ppc64el, and riscv64, disabling libbpf.
+# FIXME: Clang build fails on loongson3, ppc64el, and riscv64, disabling libbpf.
 AUTOTOOLS_AFTER__NOBPF=(
     "${AUTOTOOLS_AFTER[@]}"
     '--with-libbpf=no'

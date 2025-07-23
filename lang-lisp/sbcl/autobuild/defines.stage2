@@ -6,7 +6,7 @@ PKGDES="Steel Bank Common Lisp"
 
 # FIXME:
 # loongarch64: not supported
-# loongson3/mips64r6el: invalid magic number in core
+# loongson3: invalid magic number in core
 # riscv64: infinite hang
 FAIL_ARCH="!(amd64|arm64|ppc64el)"
 

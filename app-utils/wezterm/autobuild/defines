@@ -6,7 +6,7 @@ BUILDDEP="rustc llvm ncurses"
 
 USECLANG=1
 # FIXME(ppc64el): undefined reference to `png_init_filter_functions_vsx'
-FAIL_ARCH="(mips64r6el|ppc64el)"
+FAIL_ARCH="(ppc64el)"
 CARGO_AFTER="--no-default-features \
              --features distro-defaults,wayland"
 
